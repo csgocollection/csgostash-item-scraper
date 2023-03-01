@@ -3,6 +3,7 @@ package com.csgocollection.csgostash.scraper;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.util.stream.Collectors;
 
@@ -16,6 +17,10 @@ public class ItemScraperApplication {
                         .map(element -> element.attr("href"))
                         .collect(Collectors.toSet())
                 )
+                .map(link -> {
+                    Document skinDocument = Jsoup.connect(link).get();
+                    return new DaathAiParser().parseHtml(skinDocument);
+                })
                 .blockingIterable()
                 .forEach(System.out::println);
     }

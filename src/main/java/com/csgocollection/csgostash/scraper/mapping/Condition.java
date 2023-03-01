@@ -5,5 +5,6 @@ public enum Condition {
     MINIMAL_WEAR,
     FIELD_TESTED,
     WELL_WORN,
-    BATTLE_SCARRED
+    BATTLE_SCARRED,
+    NONE
 }
