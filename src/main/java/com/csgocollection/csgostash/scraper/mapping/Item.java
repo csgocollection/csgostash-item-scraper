@@ -11,6 +11,7 @@ import java.util.Set;
 @Builder
 public class Item {
     @Value
+    @Builder
     public static class InspectLink {
         Condition condition;
         String link;
@@ -20,7 +21,7 @@ public class Item {
     String description;
     String flavorText;
 
-    Exterior exterior;
+    ExteriorMeta exteriorMeta;
     Condition condition;
     Modifier modifier;
 
