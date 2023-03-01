@@ -1,10 +1,13 @@
 package com.csgocollection.csgostash.scraper;
 
+import com.csgocollection.csgostash.scraper.mapping.Condition;
+import com.csgocollection.csgostash.scraper.mapping.Item;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ItemScraperApplication {
@@ -19,7 +22,18 @@ public class ItemScraperApplication {
                 )
                 .map(link -> {
                     Document skinDocument = Jsoup.connect(link).get();
-                    return new DaathAiParser().parseHtml(skinDocument);
+                    String skinName = skinDocument.select("h2").text();
+
+                    Set<Item.InspectLink> inspectLinks = skinDocument.select("a[href]").stream()
+                            .filter(anchorTag -> anchorTag.attr("href").startsWith("steam://rungame/730/"))
+                            .map(anchorTag -> {
+                                String inspectLink = anchorTag.attr("href");
+                                String condition = anchorTag.text().replace("Inspect (", "").replace(")", "");
+
+                                return Item.InspectLink.builder().condition(Condition.fromShortName(condition)).link(inspectLink).build();
+                            }).collect(Collectors.toSet());
+
+                    return Item.builder().name(skinName).inspectLinks(inspectLinks).build();
                 })
                 .blockingIterable()
                 .forEach(System.out::println);

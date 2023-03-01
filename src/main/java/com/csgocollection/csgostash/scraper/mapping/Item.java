@@ -35,7 +35,7 @@ public class Item {
     Map<Condition, Double> priceByCondition;
     Map<Condition, Double> priceByConditionWithModifiers;
 
-    List<InspectLink> inspectLinks;
+    Set<InspectLink> inspectLinks;
     String texturePatternLink;
     String previewVideoUrl;
 
