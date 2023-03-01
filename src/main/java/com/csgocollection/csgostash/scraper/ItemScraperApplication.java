@@ -4,15 +4,17 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import org.jsoup.Jsoup;
 
+import java.util.stream.Collectors;
+
 public class ItemScraperApplication {
 
     public static void main(String[] args) {
         getLinks("/weapon/")
                 .flatMap(link -> Observable.fromCallable(() -> Jsoup.connect(link).get()))
-                .map(document -> {
-                            // fetch all skins for this weapon
-                            return "";
-                        }
+                .flatMapIterable(document -> document.select("a[href^='https://csgostash.com/skin/']")
+                        .stream()
+                        .map(element -> element.attr("href"))
+                        .collect(Collectors.toSet())
                 )
                 .blockingIterable()
                 .forEach(System.out::println);
