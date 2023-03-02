@@ -3,6 +3,7 @@ package com.csgocollection.csgostash.scraper;
 import com.csgocollection.csgostash.scraper.mapping.Item;
 import com.csgocollection.csgostash.scraper.scraping.DocumentItemScraper;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import lombok.AllArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,20 +21,19 @@ public class RxJavaItemScraperExecutor {
     private final ItemScraperConfig config;
 
     public Observable<Item> execute() {
-        Iterable<Set<String>> links = getLinkSubscriptions("/weapon/")
+        Observable<Set<String>> links = getLinkSubscriptions("/weapon/")
                 .map(document -> document.select("a[href^='" + config.csgostashHost() + "/skin/']")
                         .stream()
                         .map(element -> element.attr("href"))
                         .collect(Collectors.toSet())
-                )
-                .blockingIterable();
+                );
 
-        System.out.println(StreamSupport.stream(links.spliterator(), false).collect(Collectors.toSet()));
-
-        return Observable.merge(StreamSupport.stream(links.spliterator(), false)
-                        .flatMap(skinLink -> skinLink.stream().map(link -> Observable.fromCallable(() -> Jsoup.connect(link).get())))
-                        .collect(Collectors.toList()))
-                .map(documentItemScraper::scrape);
+        return links
+                .flatMap(skinLinks -> Observable.fromIterable(skinLinks)
+                        .flatMap(link -> Observable.fromCallable(() -> Jsoup.connect(link).get())
+                                .subscribeOn(Schedulers.io()))
+                        .map(documentItemScraper::scrape)
+                );
     }
 
     public Observable<Document> getLinkSubscriptions(String linkSuffix) {
