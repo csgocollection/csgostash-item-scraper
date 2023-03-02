@@ -27,7 +27,24 @@ public class ItemScraperApplication {
                             .filter(element -> element.text().startsWith("Description:"))
                             .map(element -> element.text().replace("Description: ", ""))
                             .findFirst()
-                            .orElse("");
+                            .orElse(null);
+
+                    String flavorText = skinDocument.select("p").stream()
+                            .filter(element -> element.text().startsWith("Flavor Text:"))
+                            .map(element -> element.text().replace("Flavor Text: ", ""))
+                            .findFirst()
+                            .orElse(null);
+
+                    String finishStyle = skinDocument.select("p").stream()
+                            .filter(element -> element.text().startsWith("Finish Style:"))
+                            .map(element -> element.text().replace("Finish Style: ", ""))
+                            .findFirst()
+                            .orElse(null);
+                    String finishCatalog = skinDocument.select("p").stream()
+                            .filter(element -> element.text().startsWith("Finish Catalog:"))
+                            .map(element -> element.text().replace("Finish Catalog: ", ""))
+                            .findFirst()
+                            .orElse(null);
 
                     Set<Item.InspectLink> inspectLinks = skinDocument.select("a[href]").stream()
                             .filter(anchorTag -> anchorTag.attr("href").startsWith("steam://rungame/730/"))
@@ -42,8 +59,11 @@ public class ItemScraperApplication {
                     return Item.builder()
                             .name(skinName)
                             .description(description)
+                            .flavorText(flavorText)
                             .inspectLinks(inspectLinks)
                             .previewVideoUrl(previewVideoUrl)
+                            .finishStyle(finishStyle)
+                            .finishCatalog(finishCatalog)
                             .build();
                 })
                 .blockingIterable()
