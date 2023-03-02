@@ -1,6 +1,7 @@
 package com.csgocollection.csgostash.scraper;
 
 import com.csgocollection.csgostash.scraper.mapping.Item;
+import com.csgocollection.csgostash.scraper.scraping.DocumentItemScraper;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import lombok.AllArgsConstructor;

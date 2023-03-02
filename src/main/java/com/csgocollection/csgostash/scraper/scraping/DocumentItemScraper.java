@@ -1,4 +1,4 @@
-package com.csgocollection.csgostash.scraper;
+package com.csgocollection.csgostash.scraper.scraping;
 
 import com.csgocollection.csgostash.scraper.mapping.Condition;
 import com.csgocollection.csgostash.scraper.mapping.Item;
