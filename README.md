@@ -1,5 +1,5 @@
 # CG:GO Stash Item Scraper
-<img src="https://github.com/csgocollection/csgostash-item-scraper/actions/workflows/maven-build.yml/badge.svg?branch=main" alt=“api-build” width="110">
+<img src="https://github.com/csgocollection/csgostash-item-scraper/actions/workflows/maven-build.yml/badge.svg?branch=main" alt=“maven-build” width="110">
 
 Java based scraper for https://csgostash.com that can extract skin meta information about in-game items in Counter-Strike: Global
 Offensive. Built utilizing the RxJava library.
@@ -45,6 +45,15 @@ The following properties are currently extracted from the website:
 | inspectLinks                  | Set<InspectLink> | ✅          |
 | texturePatternLink            | String           |            |
 | previewVideoUrl               | String           | ✅          |
+
+
+## Item Types
+
+The following item types are currently supported:
+
+| Item Type | Implemented            | Tested |
+|-----------|------------------------|--------|
+| WEAPON    | ✅                      |        |
 
 ## License
 
