@@ -2,11 +2,13 @@ package com.csgocollection.csgostash.scraper.scraping;
 
 import com.csgocollection.csgostash.scraper.mapping.Condition;
 import com.csgocollection.csgostash.scraper.mapping.Item;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class DocumentItemScraper {
 
     public static final String YOUTUBE_PREFIX = "https://youtube.com/watch?v=";
@@ -47,7 +49,7 @@ public class DocumentItemScraper {
                 }).collect(Collectors.toSet());
         String previewVideoUrl = YOUTUBE_PREFIX + document.select("div.yt-player-wrapper").attr("data-youtube");
 
-        Item build = Item.builder()
+        Item item = Item.builder()
                 .name(skinName)
                 .description(description)
                 .flavorText(flavorText)
@@ -57,8 +59,9 @@ public class DocumentItemScraper {
                 .finishCatalog(finishCatalog)
                 .build();
 
-        System.out.println(build);
-        return build;
+        log.debug("Scraped item: {}", item);
+
+        return item;
     }
 
 }

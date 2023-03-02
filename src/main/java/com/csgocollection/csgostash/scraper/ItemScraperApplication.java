@@ -15,7 +15,8 @@ public class ItemScraperApplication {
                 .execute()
                 .blockingIterable();
 
-        new GsonFileItemExporter("").exportItems(StreamSupport.stream(items.spliterator(), false).collect(Collectors.toSet()));
+        new GsonFileItemExporter("exports/")
+                .exportItems(StreamSupport.stream(items.spliterator(), false).collect(Collectors.toSet()));
     }
 
 }

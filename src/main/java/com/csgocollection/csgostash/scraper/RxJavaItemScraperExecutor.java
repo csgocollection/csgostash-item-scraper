@@ -12,7 +12,6 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @AllArgsConstructor
 public class RxJavaItemScraperExecutor {
