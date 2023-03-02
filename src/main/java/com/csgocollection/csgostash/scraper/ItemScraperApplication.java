@@ -32,8 +32,13 @@ public class ItemScraperApplication {
 
                                 return Item.InspectLink.builder().condition(Condition.fromShortName(condition)).link(inspectLink).build();
                             }).collect(Collectors.toSet());
+                    String previewVideoUrl = "https://youtube.com/watch?v=" + skinDocument.select("div.yt-player-wrapper").attr("data-youtube");
 
-                    return Item.builder().name(skinName).inspectLinks(inspectLinks).build();
+                    return Item.builder()
+                            .name(skinName)
+                            .inspectLinks(inspectLinks)
+                            .previewVideoUrl(previewVideoUrl)
+                            .build();
                 })
                 .blockingIterable()
                 .forEach(System.out::println);

@@ -3,7 +3,6 @@ package com.csgocollection.csgostash.scraper.mapping;
 import lombok.Builder;
 import lombok.Value;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
