@@ -23,6 +23,11 @@ public class ItemScraperApplication {
                 .map(link -> {
                     Document skinDocument = Jsoup.connect(link).get();
                     String skinName = skinDocument.select("h2").text();
+                    String description = skinDocument.select("p").stream()
+                            .filter(element -> element.text().startsWith("Description:"))
+                            .map(element -> element.text().replace("Description: ", ""))
+                            .findFirst()
+                            .orElse("");
 
                     Set<Item.InspectLink> inspectLinks = skinDocument.select("a[href]").stream()
                             .filter(anchorTag -> anchorTag.attr("href").startsWith("steam://rungame/730/"))
@@ -36,6 +41,7 @@ public class ItemScraperApplication {
 
                     return Item.builder()
                             .name(skinName)
+                            .description(description)
                             .inspectLinks(inspectLinks)
                             .previewVideoUrl(previewVideoUrl)
                             .build();
