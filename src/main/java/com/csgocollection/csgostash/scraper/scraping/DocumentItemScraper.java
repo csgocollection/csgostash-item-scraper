@@ -47,7 +47,7 @@ public class DocumentItemScraper {
                 }).collect(Collectors.toSet());
         String previewVideoUrl = YOUTUBE_PREFIX + document.select("div.yt-player-wrapper").attr("data-youtube");
 
-        return Item.builder()
+        Item build = Item.builder()
                 .name(skinName)
                 .description(description)
                 .flavorText(flavorText)
@@ -56,6 +56,9 @@ public class DocumentItemScraper {
                 .finishStyle(finishStyle)
                 .finishCatalog(finishCatalog)
                 .build();
+
+        System.out.println(build);
+        return build;
     }
 
 }
