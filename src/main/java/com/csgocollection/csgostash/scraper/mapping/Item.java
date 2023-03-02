@@ -30,6 +30,8 @@ public class Item {
     String finishCatalog;
 
     FloatRange floatRange;
+    Map<Condition, FloatRange> floatRangeByCondition;
+
     PriceRange priceRange;
     Map<Condition, Double> priceByCondition;
     Map<Condition, Double> priceByConditionWithModifiers;
