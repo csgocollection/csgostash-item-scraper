@@ -58,6 +58,7 @@ The following item types are currently supported:
 |-----------|------------------------|--------|
 | WEAPON    | ✅                      |        |
 | GLOVE     | ✅                      |        |
+| STICKER   | ✅                      |        |
 
 ## License
 
