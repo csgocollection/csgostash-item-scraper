@@ -54,6 +54,7 @@ The following item types are currently supported:
 | Item Type | Implemented            | Tested |
 |-----------|------------------------|--------|
 | WEAPON    | ✅                      |        |
+| GLOVE     | ✅                      |        |
 
 ## License
 
