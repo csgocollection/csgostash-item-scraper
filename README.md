@@ -1,5 +1,5 @@
 <p align="center">
-<h2>CSGO Stash Item Scraper</h2>
+<center><h2>CSGO Stash Item Scraper</h2></center>
 <img src="https://github.com/csgocollection/csgostash-item-scraper/actions/workflows/maven-build.yml/badge.svg?branch=main" alt=“maven-build” width="110">
 <img src="https://img.shields.io/github/license/csgocollection/csgostash-item-scraper" alt=“license” width="64">
 </p>
