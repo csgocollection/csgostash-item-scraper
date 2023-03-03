@@ -1,6 +1,8 @@
-# CS:GO Stash Item Scraper
+<p align="center">
+<h2>CSGO Stash Item Scraper</h2>
 <img src="https://github.com/csgocollection/csgostash-item-scraper/actions/workflows/maven-build.yml/badge.svg?branch=main" alt=“maven-build” width="110">
-<img src="https://img.shields.io/github/license/csgocollection/csgostash-item-scraper" alt=“license” width="110">
+<img src="https://img.shields.io/github/license/csgocollection/csgostash-item-scraper" alt=“license” width="64">
+</p>
 
 Java based scraper for https://csgostash.com that can extract skin meta information about in-game items in Counter-Strike: Global
 Offensive. Built utilizing the RxJava library.
