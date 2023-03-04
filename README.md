@@ -34,9 +34,9 @@ The following properties are currently extracted from the website:
 | name                          | String           | ✅          |
 | description                   | String           | ✅          |
 | flavorText                    | String           | ✅          |
-| exteriorMeta                  | ExteriorMeta     |            |
+| exteriorMeta                  | ExteriorMeta     | ✅          |
 | condition                     | Condition        | ✅          |
-| modifier                      | Modifier         | ✅          |
+| modifier                      | Modifier         |            |
 | collections                   | Set              |            |
 | finishStyle                   | String           | ✅          |
 | finishCatalog                 | String           | ✅          |
@@ -59,6 +59,7 @@ The following item types are currently supported:
 | WEAPON    | ✅                      |        |
 | GLOVE     | ✅                      |        |
 | STICKER   | ✅                      |        |
+| AGENT     | ✅                      |        |
 
 ## License
 

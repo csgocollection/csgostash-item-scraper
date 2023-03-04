@@ -1,6 +1,8 @@
 package com.csgocollection.csgostash.scraper.scraping;
 
 import com.csgocollection.csgostash.scraper.mapping.Condition;
+import com.csgocollection.csgostash.scraper.mapping.Exterior;
+import com.csgocollection.csgostash.scraper.mapping.ExteriorMeta;
 import com.csgocollection.csgostash.scraper.mapping.Item;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
@@ -39,6 +41,9 @@ public class DocumentItemScraper {
                 .findFirst()
                 .orElse(null);
 
+        String quality = document.select("div.quality").text();
+        ExteriorMeta exteriorMeta = Exterior.fromString(quality);
+
         Set<Item.InspectLink> inspectLinks = document.select("a[href]").stream()
                 .filter(anchorTag -> anchorTag.attr("href").startsWith(STEAM_INSPECT_PREFIX))
                 .map(anchorTag -> {
@@ -52,6 +57,7 @@ public class DocumentItemScraper {
         Item item = Item.builder()
                 .name(skinName)
                 .description(description)
+                .exteriorMeta(exteriorMeta)
                 .flavorText(flavorText)
                 .inspectLinks(inspectLinks)
                 .previewVideoUrl(previewVideoUrl)
@@ -59,7 +65,7 @@ public class DocumentItemScraper {
                 .finishCatalog(finishCatalog)
                 .build();
 
-        log.debug("Scraped item: {}", item);
+        log.info("Scraped item: {}", item);
 
         return item;
     }

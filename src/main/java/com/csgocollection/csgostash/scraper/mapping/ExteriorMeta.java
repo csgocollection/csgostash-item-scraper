@@ -7,5 +7,5 @@ import lombok.Value;
 @Builder
 public class ExteriorMeta {
     Exterior exterior;
-    String name;
+    String identifier;
 }
