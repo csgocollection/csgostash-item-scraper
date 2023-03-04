@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum Exterior {
-    GOLD("Knife", "Contraband"),
+    GOLD("Knife", "Contraband", "Extraordinary Gloves"),
     RED("Extraordinary", "Covert", "Master"),
     PINK("Exotic", "Classified", "Superior"),
     PURPLE("Remarkable", "Restricted", "Exceptional"),
