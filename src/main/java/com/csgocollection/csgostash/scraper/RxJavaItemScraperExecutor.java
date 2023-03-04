@@ -13,6 +13,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @AllArgsConstructor
 public class RxJavaItemScraperExecutor {
@@ -46,10 +47,12 @@ public class RxJavaItemScraperExecutor {
     public Observable<Document> getLinkSubscriptions() {
         try {
             Elements anchorTags = Jsoup.connect(config.csgostashHost()).get().select("a[href]");
-
-            return Observable.merge(anchorTags.stream()
+            Stream<String> links = anchorTags.stream()
                     .filter(this::isLinkSupported)
-                    .map(anchorTag -> anchorTag.attr("href"))
+                    .map(anchorTag -> anchorTag.attr("href"));
+            Stream<String> allLinks = Stream.concat(links, Stream.of(config.csgostashHost() + "/gloves?page=2"));
+
+            return Observable.merge(allLinks
                     .map(link -> Observable.fromCallable(() -> Jsoup.connect(link).get())).collect(Collectors.toList()));
         } catch (IOException e) {
             throw new RuntimeException(e);
