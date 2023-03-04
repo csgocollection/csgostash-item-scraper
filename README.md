@@ -10,7 +10,7 @@ Offensive. Built utilizing the RxJava library.
 ## Usage
 
 The project is designed for concurrent and functional use and therefore uses the RxJava library
-due to the nature of how https://csgocollection.com utilizes the data.
+due to the nature of how https://csgocollection.com is consuming the data.
 
 ```java
 var conf = new ItemScraperConfig(Fixtures.CSGOSTASH_HOST);
@@ -36,7 +36,7 @@ The following properties are currently extracted from the website:
 | flavorText                    | String           | ✅          |
 | exteriorMeta                  | ExteriorMeta     | ✅          |
 | condition                     | Condition        | ✅          |
-| modifier                      | Modifier         |            |
+| modifier                      | Modifier         | ✅          |
 | collections                   | Set              |            |
 | finishStyle                   | String           | ✅          |
 | finishCatalog                 | String           | ✅          |
@@ -46,7 +46,7 @@ The following properties are currently extracted from the website:
 | priceByCondition              | Map              |            |
 | priceByConditionWithModifiers | Map              |            |
 | inspectLinks                  | Set<InspectLink> | ✅          |
-| texturePatternLink            | String           |            |
+| texturePatternLink            | String           | ✅          |
 | previewVideoUrl               | String           | ✅          |
 
 

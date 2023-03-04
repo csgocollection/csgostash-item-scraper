@@ -1,9 +1,6 @@
 package com.csgocollection.csgostash.scraper.scraping;
 
-import com.csgocollection.csgostash.scraper.mapping.Condition;
-import com.csgocollection.csgostash.scraper.mapping.Exterior;
-import com.csgocollection.csgostash.scraper.mapping.ExteriorMeta;
-import com.csgocollection.csgostash.scraper.mapping.Item;
+import com.csgocollection.csgostash.scraper.mapping.*;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 
@@ -56,15 +53,30 @@ public class DocumentItemScraper {
         String youtubeWatchParam = document.select("div.yt-player-wrapper").attr("data-youtube");
         String previewVideoUrl = !youtubeWatchParam.isEmpty() ? YOUTUBE_PREFIX + youtubeWatchParam : null;
 
+        boolean souvenirAvailable = document.select("div.souvenir").size() > 0;
+        boolean statTrakAvailable = document.select("div.stattrak").size() > 0;
+
+        Modifier modifier = souvenirAvailable ? Modifier.SOUVENIR
+                : statTrakAvailable ? Modifier.STAT_TRAK : Modifier.NONE;
+
+        String texturePatternLink = document.select("div.skin-details-previews")
+                .select("a")
+                .attr("href");
+        if (texturePatternLink.isEmpty()) {
+            texturePatternLink = null;
+        }
+
         Item item = Item.builder()
                 .name(skinName)
                 .description(description)
                 .exteriorMeta(exteriorMeta)
                 .flavorText(flavorText)
                 .inspectLinks(inspectLinks)
+                .texturePatternLink(texturePatternLink)
                 .previewVideoUrl(previewVideoUrl)
                 .finishStyle(finishStyle)
                 .finishCatalog(finishCatalog)
+                .modifier(modifier)
                 .build();
 
         log.info("Scraped item: {}", item);
