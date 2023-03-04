@@ -10,6 +10,7 @@ public enum Exterior {
     PURPLE("Remarkable", "Restricted", "Exceptional"),
     BLUE("High Grade", "Mil-Spec", "Distinguished"),
     LIGHT_BLUE("Industrial Grade"),
+    GRAY("Consumer Grade"),
     NONE;
 
     private final String[] identifiers;

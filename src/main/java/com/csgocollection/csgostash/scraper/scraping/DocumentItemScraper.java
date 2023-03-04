@@ -52,7 +52,9 @@ public class DocumentItemScraper {
 
                     return Item.InspectLink.builder().condition(Condition.fromShortName(condition)).link(inspectLink).build();
                 }).collect(Collectors.toSet());
-        String previewVideoUrl = YOUTUBE_PREFIX + document.select("div.yt-player-wrapper").attr("data-youtube");
+
+        String youtubeWatchParam = document.select("div.yt-player-wrapper").attr("data-youtube");
+        String previewVideoUrl = !youtubeWatchParam.isEmpty() ? YOUTUBE_PREFIX + youtubeWatchParam : null;
 
         Item item = Item.builder()
                 .name(skinName)
