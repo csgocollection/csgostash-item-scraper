@@ -48,6 +48,7 @@ The following properties are currently extracted from the website:
 | inspectLinks                  | Set<InspectLink> | ✅          |
 | texturePatternLink            | String           | ✅          |
 | previewVideoUrl               | String           | ✅          |
+| phases                        | Set<Phase>       | ✅          |
 
 
 ## Item Types

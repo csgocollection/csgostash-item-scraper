@@ -40,6 +40,8 @@ public class Item {
     String texturePatternLink;
     String previewVideoUrl;
 
+    Set<Phase> phases;
+
     public String getMarketHashName() {
         return (modifier != Modifier.NONE ? " " + modifier : "") + name + " (" + condition + ")";
     }

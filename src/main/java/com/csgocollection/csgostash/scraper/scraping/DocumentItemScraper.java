@@ -3,7 +3,10 @@ package com.csgocollection.csgostash.scraper.scraping;
 import com.csgocollection.csgostash.scraper.mapping.*;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -38,6 +41,32 @@ public class DocumentItemScraper {
                 .findFirst()
                 .orElse(null);
 
+        Set<Phase> itemPhases = null;
+        if (finishCatalog != null && finishCatalog.contains("Multiple")) {
+            Set<Phase> phases = new HashSet<>();
+            for (Element element : document.select("div.col-md-6.text-center.no-padding.margin-top-large.margin-bot-large")) {
+                String name = element.select("h4").text();
+                if (name.isEmpty()) {
+                    name = element.select("h3").text();
+                }
+
+                String phaseFinishCatalogRaw = element.select("p").text();
+                String parsedFinishCatalog = phaseFinishCatalogRaw.isEmpty()
+                        ? null
+                        : element.select("p").text().substring(phaseFinishCatalogRaw.indexOf("#") + 1);
+
+                String inspectLink = element.select("a.inspect-button-skin").attr("href");
+                String previewImage = element.select("img.skin-varient-img").attr("src");
+
+                phases.add(new Phase(name.isEmpty() ? null : name, parsedFinishCatalog, inspectLink, previewImage));
+            }
+
+            if (!phases.isEmpty()) {
+                finishCatalog = phases.iterator().next().finishCatalog();
+                itemPhases = phases.stream().filter(phase -> phase.name() != null).collect(Collectors.toSet());
+            }
+        }
+
         String quality = document.select("div.quality").text();
         ExteriorMeta exteriorMeta = Exterior.fromString(quality);
 
@@ -46,9 +75,16 @@ public class DocumentItemScraper {
                 .map(anchorTag -> {
                     String inspectLink = anchorTag.attr("href");
                     String condition = anchorTag.text().replace("Inspect (", "").replace(")", "");
+                    Condition inspectCondition = Condition.fromShortName(condition);
 
-                    return Item.InspectLink.builder().condition(Condition.fromShortName(condition)).link(inspectLink).build();
-                }).collect(Collectors.toSet());
+                    if (inspectCondition == Condition.NONE) {
+                        return null;
+                    }
+
+                    return Item.InspectLink.builder().condition(inspectCondition).link(inspectLink).build();
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
 
         String youtubeWatchParam = document.select("div.yt-player-wrapper").attr("data-youtube");
         String previewVideoUrl = !youtubeWatchParam.isEmpty() ? YOUTUBE_PREFIX + youtubeWatchParam : null;
@@ -77,6 +113,7 @@ public class DocumentItemScraper {
                 .finishStyle(finishStyle)
                 .finishCatalog(finishCatalog)
                 .modifier(modifier)
+                .phases(itemPhases)
                 .build();
 
         log.info("Scraped item: {}", item);
