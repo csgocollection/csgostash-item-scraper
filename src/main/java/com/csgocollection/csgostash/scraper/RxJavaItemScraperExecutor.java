@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 public class RxJavaItemScraperExecutor {
 
-    private static final Set<String> LINK_SUFFIXES = Set.of("/weapon/", "/gloves", "/stickers", "/agents");
+    private static final Set<String> LINK_SUFFIXES = Set.of("/weapon/", "/gloves", "/stickers", "/agents", "/pins");
 
     private final DocumentItemScraper documentItemScraper;
     private final ItemScraperConfig config;
@@ -29,7 +29,8 @@ public class RxJavaItemScraperExecutor {
                                 "a[href^='" + config.csgostashHost() + "/skin/'], "
                                         + "a[href^='" + config.csgostashHost() + "/glove/'], "
                                         + "a[href^='" + config.csgostashHost() + "/sticker/'], "
-                                        + "a[href^='" + config.csgostashHost() + "/agent/']"
+                                        + "a[href^='" + config.csgostashHost() + "/agent/'], "
+                                        + "a[href^='" + config.csgostashHost() + "/pin/']"
                         )
                         .stream()
                         .map(element -> element.attr("href"))

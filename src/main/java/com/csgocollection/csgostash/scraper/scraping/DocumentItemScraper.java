@@ -77,7 +77,7 @@ public class DocumentItemScraper {
                     String condition = anchorTag.text().replace("Inspect (", "").replace(")", "");
                     Condition inspectCondition = Condition.fromShortName(condition);
 
-                    if (inspectCondition == Condition.NONE) {
+                    if (inspectLink.isEmpty()) {
                         return null;
                     }
 
