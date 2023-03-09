@@ -61,6 +61,7 @@ The following item types are currently supported:
 | GLOVE     | ✅                      |        |
 | STICKER   | ✅                      |        |
 | AGENT     | ✅                      |        |
+| PIN     | ✅                      |        |
 
 ## License
 
